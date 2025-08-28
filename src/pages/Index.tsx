@@ -2,8 +2,11 @@ import AppLayout from "@/components/Layout/AppLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, BarChart3, Users, ArrowRight, TrendingUp, Shield } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
+  
   const features = [
     {
       icon: Clock,
@@ -45,7 +48,7 @@ const Index = () => {
             <Card 
               key={feature.href} 
               className="shadow-card hover:shadow-hover transition-all duration-300 group cursor-pointer"
-              onClick={() => window.location.href = feature.href}
+              onClick={() => navigate(feature.href)}
             >
               <CardHeader className="text-center">
                 <div className="mx-auto h-16 w-16 rounded-xl bg-gradient-to-br from-primary-light to-primary-light/50 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -109,7 +112,7 @@ const Index = () => {
             </p>
             <Button 
               className="bg-gradient-to-r from-primary to-primary-hover hover:from-primary-hover hover:to-primary shadow-md"
-              onClick={() => window.location.href = "/login"}
+              onClick={() => navigate("/login")}
             >
               立即開始
             </Button>

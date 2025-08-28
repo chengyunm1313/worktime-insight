@@ -2,6 +2,7 @@ import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, S
 import { Clock, BarChart3, Users, Settings, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 const sidebarItems = [
   {
@@ -63,10 +64,10 @@ export default function AppLayout({ children, currentPath = "/" }: AppLayoutProp
                       isActive={currentPath === item.href}
                       className="w-full justify-start space-x-3 h-12 rounded-lg hover:bg-primary-light/50 data-[active=true]:bg-primary data-[active=true]:text-primary-foreground transition-all duration-200"
                     >
-                      <a href={item.href}>
+                      <Link to={item.href}>
                         <item.icon className="h-5 w-5" />
                         <span className="font-medium">{item.title}</span>
-                      </a>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 );
