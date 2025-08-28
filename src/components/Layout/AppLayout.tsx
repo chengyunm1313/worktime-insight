@@ -1,6 +1,7 @@
 import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Clock, BarChart3, Users, Settings, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 
 const sidebarItems = [
   {
@@ -32,12 +33,7 @@ interface AppLayoutProps {
 }
 
 export default function AppLayout({ children, currentPath = "/" }: AppLayoutProps) {
-  // 模擬使用者資料 - 實際應用中會從認證系統取得
-  const currentUser = {
-    name: "張小明",
-    email: "ming@company.com",
-    role: "admin", // 或 "user"
-  };
+  const { user, logout } = useAuth();
 
   return (
     <SidebarProvider>
@@ -58,7 +54,7 @@ export default function AppLayout({ children, currentPath = "/" }: AppLayoutProp
           <SidebarContent className="px-4 py-6">
             <SidebarMenu>
               {sidebarItems.map((item) => {
-                if (item.adminOnly && currentUser.role !== "admin") return null;
+                if (item.adminOnly && user?.role !== "admin") return null;
                 
                 return (
                   <SidebarMenuItem key={item.href}>
@@ -82,15 +78,15 @@ export default function AppLayout({ children, currentPath = "/" }: AppLayoutProp
             <div className="flex items-center space-x-3 mb-4">
               <div className="h-10 w-10 rounded-full bg-gradient-to-br from-accent to-accent/80 flex items-center justify-center">
                 <span className="text-sm font-semibold text-accent-foreground">
-                  {currentUser.name.charAt(0)}
+                  {user?.name.charAt(0)}
                 </span>
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-foreground truncate">
-                  {currentUser.name}
+                  {user?.name}
                 </p>
                 <p className="text-xs text-muted-foreground truncate">
-                  {currentUser.email}
+                  {user?.email}
                 </p>
               </div>
             </div>
@@ -98,6 +94,7 @@ export default function AppLayout({ children, currentPath = "/" }: AppLayoutProp
               variant="outline" 
               size="sm" 
               className="w-full justify-start space-x-2 h-10"
+              onClick={logout}
             >
               <LogOut className="h-4 w-4" />
               <span>登出</span>
