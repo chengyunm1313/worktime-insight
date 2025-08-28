@@ -2,41 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* 工時系統設計系統 - Time Tracking System Design System
+所有顏色必須為 HSL 格式，支援中文字體優化
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* 背景色系 */
+    --background: 210 20% 98%;
+    --foreground: 224 71% 4%;
 
+    /* 卡片系統 */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 224 71% 4%;
 
+    /* 彈出選單 */
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 224 71% 4%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* 主色調 - 專業藍綠色 */
+    --primary: 204 94% 40%;
+    --primary-foreground: 0 0% 98%;
+    --primary-hover: 204 94% 35%;
+    --primary-light: 204 94% 90%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* 次要色調 */
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 224 71% 4%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* 靜音色調 */
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* 強調色調 - 成功綠色 */
+    --accent: 142 76% 36%;
+    --accent-foreground: 0 0% 98%;
+    --accent-light: 142 76% 95%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* 警告和錯誤 */
+    --warning: 45 93% 47%;
+    --warning-foreground: 0 0% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* 邊框和輸入 */
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 204 94% 40%;
 
-    --radius: 0.5rem;
+    /* 統計圖表色彩 */
+    --chart-1: 204 94% 40%;
+    --chart-2: 142 76% 36%;
+    --chart-3: 45 93% 47%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 82% 52%;
+
+    /* 狀態色彩 */
+    --status-active: 142 76% 36%;
+    --status-pending: 45 93% 47%;
+    --status-inactive: 215 16% 47%;
+
+    /* 漸變效果 */
+    --gradient-primary: linear-gradient(135deg, hsl(204 94% 40%), hsl(204 94% 50%));
+    --gradient-accent: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 76% 46%));
+    --gradient-bg: linear-gradient(180deg, hsl(210 20% 98%), hsl(210 40% 96%));
+
+    /* 陰影效果 */
+    --shadow-card: 0 4px 6px -1px hsl(204 94% 40% / 0.1), 0 2px 4px -1px hsl(204 94% 40% / 0.06);
+    --shadow-hover: 0 10px 15px -3px hsl(204 94% 40% / 0.1), 0 4px 6px -2px hsl(204 94% 40% / 0.05);
+
+    --radius: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-sm: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
 

@@ -26,7 +26,9 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					hover: 'hsl(var(--primary-hover))',
+					light: 'hsl(var(--primary-light))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -42,7 +44,12 @@ export default {
 				},
 				accent: {
 					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
+					foreground: 'hsl(var(--accent-foreground))',
+					light: 'hsl(var(--accent-light))'
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))'
 				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
@@ -51,6 +58,18 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
+				},
+				chart: {
+					'1': 'hsl(var(--chart-1))',
+					'2': 'hsl(var(--chart-2))',
+					'3': 'hsl(var(--chart-3))',
+					'4': 'hsl(var(--chart-4))',
+					'5': 'hsl(var(--chart-5))'
+				},
+				status: {
+					active: 'hsl(var(--status-active))',
+					pending: 'hsl(var(--status-pending))',
+					inactive: 'hsl(var(--status-inactive))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
@@ -64,9 +83,18 @@ export default {
 				}
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				lg: 'var(--radius-lg)',
+				md: 'var(--radius)',
+				sm: 'var(--radius-sm)'
+			},
+			boxShadow: {
+				'card': 'var(--shadow-card)',
+				'hover': 'var(--shadow-hover)'
+			},
+			backgroundImage: {
+				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-accent': 'var(--gradient-accent)',
+				'gradient-bg': 'var(--gradient-bg)'
 			},
 			keyframes: {
 				'accordion-down': {
