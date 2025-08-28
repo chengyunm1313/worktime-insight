@@ -2,6 +2,10 @@
 
 一個使用 localStorage 的純前端工時追蹤應用，適合個人使用或展示用途。
 
+## 🌐 線上演示
+
+**立即體驗**: [https://chengyunm1313.github.io/worktime-insight](https://chengyunm1313.github.io/worktime-insight)
+
 ## 🚀 快速開始
 
 想要立即體驗系統功能？使用以下測試帳戶：
@@ -54,6 +58,9 @@ npm run build
 
 # 預覽生產版本
 npm run preview
+
+# 部署到 GitHub Pages
+npm run deploy
 ```
 
 啟動後開啟瀏覽器前往 `http://localhost:5173`，使用上述測試帳戶即可開始體驗！
@@ -181,12 +188,160 @@ localStorageService.importData(data);
 
 ## 🚀 部署
 
-本應用為純前端專案，可以部署到任何靜態網站託管服務：
+### GitHub Pages 部署
 
-- Vercel
-- Netlify
-- GitHub Pages
-- Firebase Hosting
+本專案已配置好 GitHub Pages 自動部署，按照以下步驟即可部署：
+
+#### 1. 準備工作
+```bash
+# 確保已安裝所有依賴
+npm install
+
+# 測試建置是否正常
+npm run build
+```
+
+#### 2. 部署到 GitHub Pages
+```bash
+# 一鍵部署（會自動建置並推送到 gh-pages 分支）
+npm run deploy
+```
+
+#### 3. 設定 GitHub 倉庫
+1. 前往您的 GitHub 倉庫設定頁面
+2. 找到 "Pages" 設定區塊
+3. 在 "Source" 中選擇 "Deploy from a branch"
+4. 選擇 `gh-pages` 分支和 `/ (root)` 資料夾
+5. 點擊 "Save" 儲存設定
+
+#### 4. 配置 Base Path（重要！）
+
+如果您的倉庫名稱不是 `worktime-insight`，需要修改 `vite.config.ts` 中的 base 設定：
+
+```typescript
+// vite.config.ts
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/您的倉庫名稱/' : '/',
+  // ... 其他配置
+}));
+```
+
+同時更新 `package.json` 中的 homepage：
+
+```json
+{
+  "homepage": "https://您的GitHub用戶名.github.io/您的倉庫名稱"
+}
+```
+
+#### 5. 訪問您的網站
+部署完成後，您的網站將可以通過以下網址訪問：
+```
+https://[您的GitHub用戶名].github.io/[倉庫名稱]
+```
+
+例如：`https://chengyunm1313.github.io/worktime-insight`
+
+#### 6. 更新部署
+當您需要更新網站內容時：
+```bash
+# 修改程式碼後，重新部署
+npm run deploy
+```
+
+### ⚙️ 自訂配置
+
+#### 修改倉庫名稱時的必要設定
+
+如果您 Fork 了這個專案並重新命名倉庫，請務必修改以下檔案：
+
+**1. 修改 `vite.config.ts`：**
+```typescript
+// 原始配置（倉庫名稱為 worktime-insight）
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/worktime-insight/' : '/',
+  // ... 其他配置
+}));
+
+// 修改後的配置（假設您的倉庫名稱為 my-time-tracker）
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/my-time-tracker/' : '/',
+  // ... 其他配置保持不變
+}));
+```
+
+**2. 修改 `package.json`：**
+```json
+// 原始配置
+{
+  "homepage": "https://chengyunm1313.github.io/worktime-insight"
+}
+
+// 修改後的配置（假設您的用戶名為 yourname，倉庫名為 my-time-tracker）
+{
+  "homepage": "https://yourname.github.io/my-time-tracker"
+}
+```
+
+**3. 重新建置和部署：**
+```bash
+npm run build
+npm run deploy
+```
+
+### 其他部署選項
+
+本應用為純前端專案，也可以部署到其他靜態網站託管服務：
+
+- **Vercel**: 連接 GitHub 倉庫自動部署
+- **Netlify**: 拖拽 `dist` 資料夾或連接 Git
+- **Firebase Hosting**: 使用 Firebase CLI 部署
+- **GitHub Pages**: 使用上述方法部署
+
+### 部署注意事項
+
+1. **路徑設定**: 
+   - 專案預設配置為 `/worktime-insight/` 路徑
+   - 如果倉庫名稱不同，**必須**修改 `vite.config.ts` 中的 `base` 設定
+   - 同時更新 `package.json` 中的 `homepage` 欄位
+2. **瀏覽器相容性**: 支援現代瀏覽器（Chrome 80+, Firefox 75+, Safari 13+, Edge 80+）
+3. **資料儲存**: 使用 localStorage，資料僅存在使用者本地瀏覽器
+4. **HTTPS**: 建議使用 HTTPS 以確保最佳安全性
+5. **GitHub Pages 設定**: 確保在倉庫設定中選擇 `gh-pages` 分支作為來源
+
+## 🚀 快速部署總結
+
+想要快速部署您自己的版本？
+
+```bash
+# 1. 克隆或 Fork 專案
+git clone https://github.com/chengyunm1313/worktime-insight.git
+cd worktime-insight
+
+# 2. 安裝依賴
+npm install
+
+# 3. 如果倉庫名稱不同，修改 vite.config.ts 中的 base 路徑
+# base: mode === 'production' ? '/您的倉庫名稱/' : '/'
+
+# 4. 部署到您的 GitHub Pages
+npm run deploy
+```
+
+⚠️ **重要提醒**: 如果您的倉庫名稱不是 `worktime-insight`，請務必修改 `vite.config.ts` 和 `package.json` 中的路徑設定！
+
+### 📋 部署前檢查清單
+
+在執行 `npm run deploy` 之前，請確認：
+
+- [ ] 已安裝所有依賴 (`npm install`)
+- [ ] 本地建置成功 (`npm run build`)
+- [ ] 如果倉庫名稱不同，已修改 `vite.config.ts` 中的 `base` 路徑
+- [ ] 如果倉庫名稱不同，已修改 `package.json` 中的 `homepage`
+- [ ] Git 倉庫已推送到 GitHub
+- [ ] GitHub Pages 設定已啟用並選擇 `gh-pages` 分支
+
+詳細部署說明請參考 [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)
 
 ## 📄 授權
 
