@@ -100,15 +100,18 @@ const Index = () => {
           </Card>
         </div>
 
-        {/* Supabase 整合提示 */}
+        {/* 本地儲存提示 */}
         <Card className="shadow-card bg-gradient-to-r from-primary-light/30 to-accent-light/30 border-primary/20">
           <CardContent className="p-8 text-center">
-            <h3 className="text-xl font-bold text-foreground mb-4">開始使用完整功能</h3>
+            <h3 className="text-xl font-bold text-foreground mb-4">純前端解決方案</h3>
             <p className="text-muted-foreground mb-6">
-              請點擊右上角的 Supabase 按鈕來啟用資料庫和認證功能，即可體驗完整的工時管理系統
+              本系統使用 localStorage 儲存資料，適合個人使用或展示用途。資料只存在瀏覽器中，不會同步到其他裝置。
             </p>
-            <Button className="bg-gradient-to-r from-primary to-primary-hover hover:from-primary-hover hover:to-primary shadow-md">
-              了解更多
+            <Button 
+              className="bg-gradient-to-r from-primary to-primary-hover hover:from-primary-hover hover:to-primary shadow-md"
+              onClick={() => window.location.href = "/login"}
+            >
+              立即開始
             </Button>
           </CardContent>
         </Card>

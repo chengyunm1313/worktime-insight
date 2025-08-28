@@ -3,10 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Clock, Lock, User, UserPlus } from "lucide-react";
+import { Clock, Lock, User, UserPlus, Database } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import { initializeDemoData, getDemoCredentials } from "@/lib/demoData";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -42,6 +43,15 @@ export default function Login() {
         variant: "destructive",
       });
     }
+  };
+
+  const handleInitDemo = () => {
+    initializeDemoData();
+    const credentials = getDemoCredentials();
+    toast({
+      title: "示範資料已載入",
+      description: `可使用 ${credentials.admin.email} / demo123 登入管理員帳戶`,
+    });
   };
 
   return (
@@ -124,7 +134,7 @@ export default function Login() {
               </Button>
             </form>
             
-            <div className="mt-4 text-center">
+            <div className="mt-4 space-y-2 text-center">
               <Button
                 variant="link"
                 onClick={() => setIsRegister(!isRegister)}
@@ -132,6 +142,18 @@ export default function Login() {
               >
                 {isRegister ? "已有帳戶？立即登入" : "沒有帳戶？立即註冊"}
               </Button>
+              
+              <div className="pt-2 border-t border-border/50">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleInitDemo}
+                  className="text-xs"
+                >
+                  <Database className="mr-2 h-3 w-3" />
+                  載入示範資料
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>

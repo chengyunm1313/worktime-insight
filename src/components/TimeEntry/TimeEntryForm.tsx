@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,8 @@ import { format } from "date-fns";
 import { zhTW } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from '@/contexts/AuthContext';
+import { localStorageService, TimeEntry } from '@/lib/localStorageService';
 
 // 工作類別配置
 const workCategories = {
@@ -22,24 +24,41 @@ const workCategories = {
   "休假": ["年假", "病假", "事假", "特休", "補休"]
 };
 
-interface TimeEntry {
-  date: Date;
-  startTime: string;
-  endTime: string;
-  category: string;
-  subcategory: string;
-  description: string;
-  hours: number;
+interface TimeEntryFormProps {
+  initialEntry?: TimeEntry;
+  onSaveSuccess?: () => void;
+  onCancelEdit?: () => void;
 }
 
-export default function TimeEntryForm() {
+export default function TimeEntryForm({ initialEntry, onSaveSuccess, onCancelEdit }: TimeEntryFormProps) {
   const { toast } = useToast();
+  const { user } = useAuth();
+
   const [date, setDate] = useState<Date>(new Date());
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [category, setCategory] = useState("");
   const [subcategory, setSubcategory] = useState("");
   const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if (initialEntry) {
+      setDate(new Date(initialEntry.date));
+      setStartTime(initialEntry.startTime);
+      setEndTime(initialEntry.endTime);
+      setCategory(initialEntry.category);
+      setSubcategory(initialEntry.subcategory);
+      setDescription(initialEntry.description);
+    } else {
+      // 重置表單
+      setDate(new Date());
+      setStartTime("");
+      setEndTime("");
+      setCategory("");
+      setSubcategory("");
+      setDescription("");
+    }
+  }, [initialEntry]);
 
   const calculateHours = (start: string, end: string): number => {
     if (!start || !end) return 0;
@@ -57,6 +76,15 @@ export default function TimeEntryForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!user) {
+      toast({
+        title: "未登入",
+        description: "請先登入才能記錄工時",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (!date || !startTime || !endTime || !category || !subcategory || !description.trim()) {
       toast({
         title: "請填寫所有必要欄位",
@@ -75,30 +103,56 @@ export default function TimeEntryForm() {
       return;
     }
 
-    const timeEntry: TimeEntry = {
-      date,
+    const timeEntryData = {
+      date: format(date, 'yyyy-MM-dd'),
       startTime,
       endTime,
       category,
       subcategory,
       description,
       hours,
+      user_id: user.id,
     };
 
-    // 這裡會整合 Supabase 儲存資料
-    console.log("工時記錄:", timeEntry);
-    
-    toast({
-      title: "工時記錄已儲存",
-      description: `成功記錄 ${hours.toFixed(1)} 小時的工作時間`,
-    });
+    try {
+      if (initialEntry?.id) {
+        // 更新現有記錄
+        const updatedEntry = localStorageService.updateTimeEntry(initialEntry.id, timeEntryData);
+        if (updatedEntry) {
+          toast({
+            title: "工時記錄已更新",
+            description: `成功更新 ${hours.toFixed(1)} 小時的工作時間`,
+          });
+        } else {
+          throw new Error("更新失敗");
+        }
+      } else {
+        // 新增記錄
+        localStorageService.saveTimeEntry(timeEntryData);
+        toast({
+          title: "工時記錄已儲存",
+          description: `成功記錄 ${hours.toFixed(1)} 小時的工作時間`,
+        });
+      }
 
-    // 重置表單
-    setStartTime("");
-    setEndTime("");
-    setCategory("");
-    setSubcategory("");
-    setDescription("");
+      // 呼叫成功回調
+      if (onSaveSuccess) {
+        onSaveSuccess();
+      } else {
+        // 重置表單
+        setStartTime("");
+        setEndTime("");
+        setCategory("");
+        setSubcategory("");
+        setDescription("");
+      }
+    } catch (error) {
+      toast({
+        title: "儲存失敗",
+        description: "工時記錄儲存失敗，請重試",
+        variant: "destructive",
+      });
+    }
   };
 
   const availableSubcategories = category ? workCategories[category as keyof typeof workCategories] || [] : [];
@@ -110,7 +164,7 @@ export default function TimeEntryForm() {
           <Plus className="h-5 w-5 text-primary-foreground" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-foreground">工時輸入</h1>
+          <h1 className="text-2xl font-bold text-foreground">{initialEntry ? "編輯工時記錄" : "工時輸入"}</h1>
           <p className="text-muted-foreground">記錄您的工作時間和內容</p>
         </div>
       </div>
@@ -119,7 +173,7 @@ export default function TimeEntryForm() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Clock className="h-5 w-5 text-primary" />
-            <span>新增工時記錄</span>
+            <span>{initialEntry ? "編輯現有記錄" : "新增工時記錄"}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -245,24 +299,20 @@ export default function TimeEntryForm() {
 
             {/* 提交按鈕 */}
             <div className="flex justify-end space-x-3">
-              <Button 
-                type="button" 
-                variant="outline"
-                onClick={() => {
-                  setStartTime("");
-                  setEndTime("");
-                  setCategory("");
-                  setSubcategory("");
-                  setDescription("");
-                }}
-              >
-                清除
-              </Button>
+              {initialEntry && (
+                <Button 
+                  type="button" 
+                  variant="outline"
+                  onClick={onCancelEdit}
+                >
+                  取消編輯
+                </Button>
+              )}
               <Button 
                 type="submit" 
                 className="bg-gradient-to-r from-primary to-primary-hover hover:from-primary-hover hover:to-primary shadow-md"
               >
-                儲存工時記錄
+                {initialEntry ? "更新工時記錄" : "儲存工時記錄"}
               </Button>
             </div>
           </form>

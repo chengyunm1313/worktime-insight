@@ -1,73 +1,193 @@
-# Welcome to your Lovable project
+# 工時管理系統 - 純前端解決方案
 
-## Project info
+一個使用 localStorage 的純前端工時追蹤應用，適合個人使用或展示用途。
 
-**URL**: https://lovable.dev/projects/e12a168f-3eb7-4ac4-8108-72f93f787900
+## 🚀 快速開始
 
-## How can I edit this code?
+想要立即體驗系統功能？使用以下測試帳戶：
 
-There are several ways of editing your application.
+**管理員帳戶** - 體驗完整功能
+- 帳號：`admin@demo.com`
+- 密碼：`demo123`
 
-**Use Lovable**
+**一般使用者** - 體驗基本功能  
+- 帳號：`user1@demo.com`
+- 密碼：`demo123`
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/e12a168f-3eb7-4ac4-8108-72f93f787900) and start prompting.
+## 🚀 功能特色
 
-Changes made via Lovable will be committed automatically to this repo.
+- **工時輸入**: 快速記錄工作時間，支援分類和詳細描述
+- **統計分析**: 
+  - 圓餅圖和長條圖視覺化工時分布
+  - 月度趨勢分析
+  - 多種時間範圍選擇（週、月、季、年）
+  - 可展開的詳細分類統計
+- **使用者管理**: 管理團隊成員和查看所有使用者的工時統計（管理員功能）
+- **系統設定**: 
+  - 資料匯出/匯入功能
+  - 示範資料管理
+  - 系統統計資訊
+  - 使用者資訊管理
+- **純前端**: 使用 localStorage 儲存，無需後端服務
+- **響應式設計**: 支援桌面和行動裝置
 
-**Use your preferred IDE**
+## 🛠 技術架構
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **前端框架**: React 18 + TypeScript
+- **建構工具**: Vite
+- **UI 組件**: shadcn/ui + Tailwind CSS
+- **資料儲存**: localStorage
+- **路由**: React Router
+- **狀態管理**: React Context API
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 📦 安裝與執行
 
-Follow these steps:
+```bash
+# 安裝依賴
+npm install
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 啟動開發伺服器
 npm run dev
+
+# 建構生產版本
+npm run build
+
+# 預覽生產版本
+npm run preview
 ```
 
-**Edit a file directly in GitHub**
+啟動後開啟瀏覽器前往 `http://localhost:5173`，使用上述測試帳戶即可開始體驗！
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🎯 使用說明
 
-**Use GitHub Codespaces**
+### 首次使用
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+1. 開啟應用後，點擊「立即開始」或直接前往登入頁面
+2. 使用預設管理員帳戶登入，或註冊新帳戶
+3. 登入後即可開始使用各項功能
 
-## What technologies are used for this project?
+### 🔑 測試帳戶
 
-This project is built with:
+為了方便測試，系統提供以下預設帳戶：
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+#### 管理員帳戶
+- **電子郵件**: `admin@demo.com`
+- **密碼**: `demo123`
+- **權限**: 完整的系統管理權限
 
-## How can I deploy this project?
+#### 一般使用者帳戶
+- **電子郵件**: `user1@demo.com` / `user2@demo.com`
+- **密碼**: `demo123`
+- **權限**: 個人工時記錄管理
 
-Simply open [Lovable](https://lovable.dev/projects/e12a168f-3eb7-4ac4-8108-72f93f787900) and click on Share -> Publish.
+> 💡 **提示**: 首次開啟應用時會自動載入示範資料，包含上述測試帳戶和範例工時記錄
 
-## Can I connect a custom domain to my Lovable project?
+### 工時記錄
 
-Yes, you can!
+1. 前往「工時輸入」頁面
+2. 選擇工作日期、開始和結束時間
+3. 選擇工作類別和次類別
+4. 填寫工作內容描述
+5. 點擊「儲存工時記錄」
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### 統計分析
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+1. 前往「統計分析」頁面
+2. 選擇時間範圍（本週、本月、過去半年、過去一年或自訂範圍）
+3. 查看總工時、工作天數和日均工時
+4. 使用分頁功能查看不同類型的分析：
+   - **總覽**: 圓餅圖和長條圖顯示工時分布
+   - **圖表分析**: 詳細的工時與記錄數對比圖表
+   - **趨勢分析**: 月度工時趨勢圖（需選擇較長時間範圍）
+   - **詳細資料**: 可展開的分類統計和明細表
+
+### 使用者管理（管理員功能）
+
+1. 管理員可以在「使用者管理」頁面查看所有使用者
+2. 查看每個使用者的總工時和記錄數
+3. 新增使用者：
+   - 設定姓名、電子郵件和密碼
+   - 指定使用者角色（管理員/使用者）
+4. 編輯使用者資料：
+   - 修改姓名和電子郵件
+   - 調整使用者角色（管理員/使用者）
+   - 重設使用者密碼
+5. 刪除使用者：
+   - 刪除使用者帳戶和所有相關工時記錄
+   - 管理員無法刪除自己的帳戶
+6. 使用者可以修改自己的個人資料和密碼
+
+### 系統設定
+
+1. 前往「設定」頁面管理系統配置
+2. 編輯個人資料和修改密碼
+3. 查看使用者資訊和系統統計
+4. 匯出/匯入資料進行備份和還原
+5. 重置示範資料或清除所有資料
+6. 查看示範帳戶登入資訊
+5. 查看示範帳戶登入資訊
+
+## 📊 資料儲存
+
+本應用使用瀏覽器的 localStorage 來儲存資料：
+
+- **使用者資料**: 帳戶資訊、角色權限
+- **工時記錄**: 所有的工時輸入資料
+- **登入狀態**: 當前登入使用者資訊
+
+### 資料備份與還原
+
+應用提供資料匯出和匯入功能：
+
+```javascript
+// 匯出資料
+const data = localStorageService.exportData();
+console.log(JSON.stringify(data, null, 2));
+
+// 匯入資料
+localStorageService.importData(data);
+```
+
+## 🔒 權限管理
+
+系統支援兩種使用者角色：
+
+- **管理員 (admin)**: 可以查看所有使用者的資料和統計
+- **一般使用者 (user)**: 只能查看和編輯自己的資料
+
+## 🌟 工作類別
+
+系統預設提供以下工作類別：
+
+- **開發工作**: 前端開發、後端開發、資料庫設計、系統測試、程式碼審查
+- **專案管理**: 需求分析、進度追蹤、會議協調、文件整理、風險評估
+- **客戶服務**: 客戶諮詢、問題解決、技術支援、產品演示、培訓服務
+- **行政事務**: 文件處理、報告撰寫、資料整理、會議記錄、其他行政
+- **休假**: 年假、病假、事假、特休、補休
+
+## 📱 瀏覽器支援
+
+- Chrome 80+
+- Firefox 75+
+- Safari 13+
+- Edge 80+
+
+## ⚠️ 注意事項
+
+- 資料僅儲存在本地瀏覽器中，不會同步到其他裝置
+- 清除瀏覽器資料會導致所有記錄遺失
+- 建議定期匯出資料進行備份
+- 適合個人使用或展示用途，不建議用於生產環境的團隊協作
+
+## 🚀 部署
+
+本應用為純前端專案，可以部署到任何靜態網站託管服務：
+
+- Vercel
+- Netlify
+- GitHub Pages
+- Firebase Hosting
+
+## 📄 授權
+
+MIT License
